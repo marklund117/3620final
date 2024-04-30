@@ -1,62 +1,116 @@
 <script>
-	import TodoItem from '../components/TodoItem.svelte';
+	import Entry from '../components/Entry.svelte';
 
-	let todoItems = [
-		{ id: 1, text: 'Write Webapps', completed: false },
-		{ id: 2, text: 'Create Calzones', completed: true }
+	let lorebook = [
+		{ id: 1, category: 'character', name: 'Marisa', description: 'Western style Eastern magician' },
+		{ id: 2, category: 'location', name: 'Tar Valon', description: 'The White Tower' }
 	];
 
-	let newItemText = '';
+	let newItemName = '';
+	let newItemCategory = '';
+	let newItemDesc = '';
 
-	function addItem() {
-		if (newItemText.trim() !== '') {
-			const newItem = {
-				id: todoItems.length + 1,
-				text: newItemText.trim(),
-				completed: false
-			};
-			todoItems = [...todoItems, newItem];
-			newItemText = '';
+	function addEntry() {
+		if (newItemName && newItemCategory) {
+			lorebook = [
+				...lorebook,
+				{
+					id: Date.now(),
+					category: newItemCategory,
+					name: newItemName,
+					description: newItemDesc
+				}
+			];
+			newItemName = '';
+			newItemCategory = '';
+			newItemDesc = '';
 		}
 	}
 
-	function clearCompleted() {
-		todoItems = todoItems.filter((item) => !item.completed);
+	function filterToCategory(category) {
+		lorebook = lorebook.filter((item) => item.category === category);
 	}
 
-	$: incompleteCount = todoItems.filter((item) => !item.completed).length;
+	let categories = ['character', 'location', 'other'];
+
+	$: characterCount = lorebook.filter((item) => item.category === 'character').length;
+	$: locationCount = lorebook.filter((item) => item.category === 'location').length;
+	$: otherCount = lorebook.filter((item) => item.category === 'other').length;
+
+	function handleSave(event) {
+		const index = lorebook.findIndex((item) => item.id === event.detail.id);
+		lorebook[index] = event.detail;
+	}
+
+	function handleDelete(event) {
+		lorebook = lorebook.filter((item) => item.id !== event.detail.id);
+	}
+
+	function handleDuplicate(event) {
+		lorebook = [...lorebook, event.detail];
+	}
 </script>
 
-<div class="min-h-screen w-full bg-slate-100 rounded-md p-4 flex flex-col">
-	<div class="mx-auto w-1/2 bg-slate-200 rounded-md shadow-sm flex flex-col">
-		<div class="flex justify-between items-center">
-			<h1 class="text-slate-950 text-2xl p-4">Svelte To-Do App</h1>
-			<form on:submit|preventDefault={addItem}>
+<div class="w-full bg-slate-100 rounded-md p-4 flex flex-col">
+	<div class="mx-auto w-2/3 bg-slate-200 rounded-md shadow-sm flex flex-col">
+		<div class="flex justify-around items-center">
+			<h1 class="text-slate-950 text-4xl p-4">Lorebook</h1>
+			<form on:submit|preventDefault={addEntry}>
+				<div class="flex flex-row">
+					<input
+						type="text"
+						class="p-2 m-2 rounded-md border border-slate-300"
+						placeholder="Entry name"
+						bind:value={newItemName}
+					/>
+					<select bind:value={newItemCategory} class="p-2 m-2 rounded-md border border-slate-300">
+						<option value="">Select a category</option>
+						<option value="character">Character</option>
+						<option value="location">Location</option>
+						<option value="other">Other</option>
+					</select>
+					<button
+						type="submit"
+						class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
+					>
+						Add Entry
+					</button>
+				</div>
 				<input
 					type="text"
-					class="p-2 m-2 rounded-md border border-slate-300"
-					placeholder="Enter a new task"
-					bind:value={newItemText}
+					class="p-2 m-2 rounded-md border border-slate-300 w-full h-20"
+					placeholder="Entry description"
+					bind:value={newItemDesc}
 				/>
-				<button
-					type="submit"
-					class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
-				>
-					Add Item
-				</button>
 			</form>
 		</div>
 		<div class="flex justify-between items-center bg-slate-200">
-			<p class="p-4 text-orange-600">{incompleteCount} incomplete items remain</p>
+			<p class="p-4 text-purple-600">{characterCount} Characters</p>
+			<p class="p-4 text-blue-600">{locationCount} Locations</p>
+			<p class="p-4 text-orange-600">{otherCount} Other entries</p>
 			<button
-				class="bg-teal-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-200"
-				on:click={clearCompleted}
+				class="bg-purple-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-purple-200"
+				on:click={filterToCategory('character')}
 			>
-				Clear Completed Items
+				Show Characters
+			</button>
+			<button
+				class="bg-blue-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-blue-200"
+				on:click={filterToCategory('location')}
+			>
+				Show Locations
+			</button>
+			<button
+				class="bg-orange-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-orange-200"
+				on:click={filterToCategory('other')}
+			>
+				Show Others
 			</button>
 		</div>
 	</div>
-	{#each todoItems as item}
-		<TodoItem {item} bind:todoItems />
+</div>
+<div class="bg-slate-100 min-h-screen flex grid-flow-row">
+	{#each lorebook as entry}
+		<Entry {entry} bind:lorebook />
 	{/each}
 </div>
