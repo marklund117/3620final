@@ -26,10 +26,10 @@
 </script>
 
 <div
-	class="flex flex-col items-center justify-between rounded-md shadow-sm p-4 mt-4 w-1/5 h-1/5 mx-auto"
-	class:bg-purple-200={entry.category === 'character'}
-	class:bg-blue-200={entry.category === 'location'}
-	class:bg-orange-200={entry.category === 'other'}
+	class="flex flex-col items-center justify-between rounded-md shadow-sm p-4 m-2 border border-slate-300"
+	class:bg-purple-100={entry.category === 'character'}
+	class:bg-blue-100={entry.category === 'location'}
+	class:bg-orange-100={entry.category === 'other'}
 >
 	{#if editing}
 		<input type="text" class="p-2 m-2 rounded-md border border-slate-300" bind:value={entry.name} />
@@ -42,24 +42,29 @@
 			class="p-2 m-2 rounded-md border border-slate-300 w-full h-20"
 			bind:value={entry.description}
 		></textarea>
-		<button
-			class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
-			on:click={saveEntry}>Save</button
-		>
 	{:else}
 		<h2 class="text-slate-950 text-xl">{entry.name}</h2>
 		<p class="text-slate-700">{entry.description}</p>
+	{/if}
+	<div>
+		{#if editing}
+			<button
+				class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
+				on:click={saveEntry}>Save</button
+			>
+		{:else}
+			<button
+				class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
+				on:click={editEntry}>Edit</button
+			>
+		{/if}
 		<button
 			class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
-			on:click={editEntry}>Edit</button
+			on:click={duplicateEntry}>Duplicate</button
 		>
-	{/if}
-	<button
-		class="bg-teal-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-teal-300"
-		on:click={duplicateEntry}>Duplicate</button
-	>
-	<button
-		class="bg-red-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-red-300"
-		on:click={deleteEntry}>Delete</button
-	>
+		<button
+			class="bg-red-200 p-2 m-2 rounded-md border border-slate-500 hover:bg-red-300"
+			on:click={deleteEntry}>Delete</button
+		>
+	</div>
 </div>

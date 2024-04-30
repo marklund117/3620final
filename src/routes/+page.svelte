@@ -56,6 +56,7 @@
 	$: locationCount = lorebook.filter((item) => item.category === 'location').length;
 	$: otherCount = lorebook.filter((item) => item.category === 'other').length;
 </script>
+<main class="bg-slate-100 h-screen">
 
 <div class="w-full bg-slate-100 rounded-md p-4 flex flex-col">
 	<div class="mx-auto w-2/3 bg-slate-200 rounded-md shadow-sm flex flex-col">
@@ -130,8 +131,10 @@
 		</div>
 	</div>
 </div>
-<div class="bg-slate-100 min-h-screen flex grid-flow-row">
+<div class="bg-slate-100 flex flex-wrap mx-auto w-2/3">
 	{#each displayedLorebook as entry}
 		<Entry {entry} on:save={handleSave} on:delete={handleDelete} on:duplicate={handleDuplicate} />
 	{/each}
 </div>
+
+</main>
