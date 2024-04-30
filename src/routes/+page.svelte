@@ -27,10 +27,6 @@
 		}
 	}
 
-	function filterToCategory(category) {
-		lorebook = lorebook.filter((item) => item.category === category);
-	}
-
 	let categories = ['character', 'location', 'other'];
 
 	$: characterCount = lorebook.filter((item) => item.category === 'character').length;
@@ -48,6 +44,12 @@
 
 	function handleDuplicate(event) {
 		lorebook = [...lorebook, event.detail];
+	}
+
+	function filterToCategory(category) {
+		lorebook = categories.includes(category)
+			? lorebook.filter((item) => item.category === category)
+			: [...lorebook];
 	}
 </script>
 
