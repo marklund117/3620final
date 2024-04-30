@@ -6,7 +6,7 @@ deployed live at: https://3620-final.vercel.app/
 
 I chose to work with Svelte for this application due to my past experience with it and my preference for its syntax, especially the $: operator for reactivity.
 
-###Features:
+### Features:
 
 1) User can view all entries in the lorebook
 2) User can add a new entry
