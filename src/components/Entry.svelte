@@ -39,7 +39,7 @@
 			<option value="other">Other</option>
 		</select>
 		<textarea
-			class="p-2 m-2 rounded-md border border-slate-300 w-full h-20"
+			class="p-2 m-2 rounded-md border border-slate-300 w-full h-20 text-wrap"
 			bind:value={entry.description}
 		></textarea>
 	{:else}
