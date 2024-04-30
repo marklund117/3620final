@@ -25,6 +25,7 @@
 			newItemCategory = '';
 			newItemDesc = '';
 		}
+		displayedLorebook = lorebook
 	}
 
 	let categories = ['character', 'location', 'other'];
@@ -36,18 +37,19 @@
 
 	function handleDelete(event) {
 		lorebook = lorebook.filter((item) => item.id !== event.detail.id);
+		displayedLorebook = displayedLorebook.filter((item) => item.id !== event.detail.id);
 	}
 
 	function handleDuplicate(event) {
 		lorebook = [...lorebook, event.detail];
+		displayedLorebook = [...displayedLorebook, event.detail];
 	}
 
-	let displayedLorebook = lorebook;
+	let displayedLorebook = [...lorebook];
 
 	function filterToCategory(category) {
-		displayedLorebook = categories.includes(category)
-			? lorebook.filter((item) => item.category === category)
-			: lorebook;
+		displayedLorebook = lorebook.filter((item) => item.category === category);
+		console.log(`FilterToCategory has filtered to: ${category}`)
 	}
 
 	$: characterCount = lorebook.filter((item) => item.category === 'character').length;
@@ -93,28 +95,37 @@
 			<p class="p-4 text-blue-600">{locationCount} Locations</p>
 			<p class="p-4 text-orange-600">{otherCount} Other entries</p>
 			<button
-				class="bg-slate-300 p-2 m-2 rounded-md border border-slate-500 hover:bg-slate-400"
-				on:click={() => displayedLorebook = lorebook}
-			>
-				Show All
-			</button>
-			<button
 				class="bg-purple-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-purple-200"
-				on:click={filterToCategory('character')}
+				on:click={() => {
+					console.log(`Character Filter Button Clicked.`)
+					filterToCategory('character')
+					}}
 			>
 				Show Characters
 			</button>
 			<button
 				class="bg-blue-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-blue-200"
-				on:click={filterToCategory('location')}
+				on:click={() => {
+					console.log(`Location Filter Button Clicked.`)
+					filterToCategory('location')
+					}}
 			>
 				Show Locations
 			</button>
 			<button
 				class="bg-orange-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-orange-200"
-				on:click={filterToCategory('other')}
+				on:click={() => {
+				console.log(`Other Filter Button Clicked.`)
+				filterToCategory('other')
+				}}
 			>
 				Show Others
+			</button>
+			<button
+				class="bg-slate-300 p-2 m-2 rounded-md border border-slate-500 hover:bg-slate-400"
+				on:click={() => (displayedLorebook = lorebook)}
+			>
+				Show All
 			</button>
 		</div>
 	</div>
