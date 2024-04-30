@@ -70,7 +70,7 @@
 <main class="bg-slate-100 h-screen">
 
 <div class="w-full bg-slate-100 rounded-md p-4 flex flex-col">
-	<div class="mx-auto w-2/3 bg-slate-200 rounded-md shadow-sm flex flex-col">
+	<div class="mx-auto w-3/4 bg-slate-200 rounded-md shadow-sm flex flex-col">
 		<div class="flex justify-around items-center">
 			{#if isEditingTitle}
 				<input
@@ -176,7 +176,7 @@
 	</div>
 </div>
 
-<div class="bg-slate-100 flex flex-wrap mx-auto w-2/3">
+<div class="bg-slate-100 flex flex-wrap mx-auto w-3/4">
 	{#each displayedLorebook as entry}
 		<Entry {entry} on:save={handleSave} on:delete={handleDelete} on:duplicate={handleDuplicate} />
 	{/each}

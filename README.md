@@ -21,5 +21,5 @@ I chose to work with Svelte for this application due to my past experience with 
 11) User can sort entries A-Z
 12) User can duplicate an entry (the duplicate gains a 2 appended to the entry name, all other data is identical e.g. ‘Dragon 2’)
 13) Application displays stats relating to the total # of entries (ex. 12 Characters, 8 locations, 5 other)
-14) User can ‘delete all’ and completely wipe their lorebook INCOMPLETE
-15) User can edit an overall lorebook title at the top of the page INCOMPLETE
+14) User can ‘delete all’ and completely wipe their lorebook
+15) User can edit an overall lorebook title at the top of the page
