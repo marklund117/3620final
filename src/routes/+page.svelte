@@ -29,10 +29,6 @@
 
 	let categories = ['character', 'location', 'other'];
 
-	$: characterCount = lorebook.filter((item) => item.category === 'character').length;
-	$: locationCount = lorebook.filter((item) => item.category === 'location').length;
-	$: otherCount = lorebook.filter((item) => item.category === 'other').length;
-
 	function handleSave(event) {
 		const index = lorebook.findIndex((item) => item.id === event.detail.id);
 		lorebook[index] = event.detail;
@@ -46,11 +42,17 @@
 		lorebook = [...lorebook, event.detail];
 	}
 
+	let displayedLorebook = lorebook;
+
 	function filterToCategory(category) {
-		lorebook = categories.includes(category)
+		displayedLorebook = categories.includes(category)
 			? lorebook.filter((item) => item.category === category)
-			: [...lorebook];
+			: lorebook;
 	}
+
+	$: characterCount = lorebook.filter((item) => item.category === 'character').length;
+	$: locationCount = lorebook.filter((item) => item.category === 'location').length;
+	$: otherCount = lorebook.filter((item) => item.category === 'other').length;
 </script>
 
 <div class="w-full bg-slate-100 rounded-md p-4 flex flex-col">
@@ -91,6 +93,12 @@
 			<p class="p-4 text-blue-600">{locationCount} Locations</p>
 			<p class="p-4 text-orange-600">{otherCount} Other entries</p>
 			<button
+				class="bg-slate-300 p-2 m-2 rounded-md border border-slate-500 hover:bg-slate-400"
+				on:click={() => displayedLorebook = lorebook}
+			>
+				Show All
+			</button>
+			<button
 				class="bg-purple-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-purple-200"
 				on:click={filterToCategory('character')}
 			>
@@ -112,7 +120,7 @@
 	</div>
 </div>
 <div class="bg-slate-100 min-h-screen flex grid-flow-row">
-	{#each lorebook as entry}
-		<Entry {entry} bind:lorebook />
+	{#each displayedLorebook as entry}
+		<Entry {entry} on:save={handleSave} on:delete={handleDelete} on:duplicate={handleDuplicate} />
 	{/each}
 </div>

@@ -2,7 +2,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	export let entry;
-	export let lorebook;
 
 	let editing = false;
 	let dispatch = createEventDispatcher();
