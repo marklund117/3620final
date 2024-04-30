@@ -124,9 +124,9 @@
 			</form>
 		</div>
 		<div class="flex justify-between items-center bg-slate-200">
-			<p class="p-4 text-purple-600">{characterCount} Characters</p>
-			<p class="p-4 text-blue-600">{locationCount} Locations</p>
-			<p class="p-4 text-orange-600">{otherCount} Other entries</p>
+			<p class="p-4 text-purple-600">{characterCount} Character(s)</p>
+			<p class="p-4 text-blue-600">{locationCount} Location(s)</p>
+			<p class="p-4 text-orange-600">{otherCount} Other(s)</p>
 			<button
 				class="bg-purple-100 p-2 m-2 rounded-md border border-slate-500 hover:bg-purple-200"
 				on:click={() => {
